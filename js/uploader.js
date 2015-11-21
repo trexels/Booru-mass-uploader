@@ -201,7 +201,7 @@ function SendFile(file, callback) {
 				LogFailure(file, 'this image already exists')
 			else if (this.responseText.indexOf('permission') != -1) {
 				LogFailure(file, 'no permissions');
-				var msg = 'Could not upload this image\u2014the board says that we\'ve have no permissions.\nCheck if you are logged in. Stopped.';
+				var msg = 'Could not upload this image\u2014the board says that we have no permissions.\nCheck if you are logged in. Stopped.';
 				alert(msg);
 				OnAllUploaded();
 				throw msg;
