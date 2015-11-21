@@ -1,3 +1,7 @@
+// Coding = OK : http://www.javascriptlint.com/online_lint.php
+// Syntax = OK : http://esprima.org/demo/validate.html
+// Online JavaScript beautifier : http://jsbeautifier.org/
+
 if (!XMLHttpRequest.prototype.sendAsBinary) {
   XMLHttpRequest.prototype.sendAsBinary = function (sData) {
     var nBytes = sData.length, ui8Data = new Uint8Array(nBytes);
