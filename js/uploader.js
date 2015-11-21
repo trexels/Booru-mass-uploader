@@ -50,12 +50,12 @@ function FilesSelected(selFiles) {
 	if (upOptions.running) 
 		return;
 	upOptions = UploadOptions();
-    if (upOptions.auth.use && !IsNum(upOptions.auth.userID)) {
-		alert('Wrong user ID - it must be a number.');
+    if (upOptions.auth.use && isNaN(upOptions.auth.userID)) {
+		alert('Wrong user ID\u2014it must be a number.');
 		return;
     }
     if (upOptions.auth.use && upOptions.auth.ticket.length != 40) {
-		alert('Wrong ticket - it must be 40 characters long.');
+		alert('Wrong ticket\u2014it must be 40 characters long.');
 		return;
 	}
 
@@ -70,7 +70,7 @@ function FilesSelected(selFiles) {
 	SendFiles(files);
   } catch (e) {
     if (typeof e == 'string') 
-		alert('Couldn\'t upload - ' + e);
+		alert('Couldn\'t upload\u2014' + e);
   }
 }
 
@@ -201,7 +201,7 @@ function SendFile(file, callback) {
 				LogFailure(file, 'this image already exists')
 			else if (this.responseText.indexOf('permission') != -1) {
 				LogFailure(file, 'no permissions');
-				var msg = 'Could not upload this image - the board says we\'ve got no permissions.\nCheck if you are logged in. Stopped.';
+				var msg = 'Could not upload this image\u2014the board says that we\'ve have no permissions.\nCheck if you are logged in. Stopped.';
 				alert(msg);
 				OnAllUploaded();
 				throw msg;
