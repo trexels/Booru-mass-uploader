@@ -49,4 +49,4 @@ if (~document.location.href.indexOf('s=mass_upload')) {
 	a.href = document.location.protocol+'//'+document.location.hostname+'/index.php?page=post&s=mass_upload';
 	li.appendChild(a);
 	navbar.appendChild(li);
-} 	
+}
