@@ -6,6 +6,7 @@
 // @include	http://*.booru.org/index.php*
 // @include 	http://gelbooru.com/index.php*
 // @include	http://safebooru.org/index.php*
+// @include	http://rule34.xxx/index.php*
 // @grant 		none 
 // @noframes
 // ==/UserScript==
