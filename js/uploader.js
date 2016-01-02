@@ -151,12 +151,12 @@ function Log(className, msg) {
 
     $show('log');
 
-    if ($('log').childNodes.length > 200) {
+    /* if ($('log').childNodes.length > 200) {
         var log = $('log');
         while (child = log.firstChild) {
             log.removeChild(child);
         }
-    }
+    } */
 
     var line = document.createElement('div');
     line.className = className;
