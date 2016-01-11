@@ -14,7 +14,8 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
     };
 }
 var settingsToSave = ['tags', 'source'];
-var checkboxesToSave = ['forceRating', 'ratingAsDefault', 'setSafe', 'setQuest', 'setExplicit', 'forceTags', 'addTags', 'title'];
+var checkboxesToSave = ['forceRating', 'ratingAsDefault', 'setSafe', 'setQuest', 'setExplicit', 'forceTags', 'addTags', 'title', 'asFiles', 'asFolder'];
+
 var myTags = (GetCookie('tags') || '').replace(/%2520/gi, ' ').replace(/%20/gi, ' ').split(/\s+/);
 if (myTags.length) {
     $show('mytags');
@@ -24,6 +25,26 @@ if (myTags.length) {
             "onclick=\"javascript:toggleTags('" + tag + "','tags','t_" + tag + "');" + 'return false;">' + tag + '</a> ';
     });
     $('my-tags').innerHTML = tagsArea;
+};
+
+$$('#asFiles,#asFolder').each(function(el) {
+    el.onchange = function() {
+        if (this.id == 'asFolder' && this.checked) {
+            $('files').setAttribute('directory', '');
+            $('files').setAttribute('mozdirectory', '');
+            $('files').setAttribute('webkitdirectory', '');
+        } else {
+            $('files').removeAttribute('directory');
+            $('files').removeAttribute('mozdirectory');
+            $('files').removeAttribute('webkitdirectory');
+        }
+    }
+})
+
+RestoreLastSettings();
+UploadOptions();
+var upOptions = {
+    running: false
 };
 
 function toggleTags(tag, id, lid) {
@@ -39,22 +60,17 @@ function toggleTags(tag, id, lid) {
     }
     return false;
 }
-RestoreLastSettings();
-UploadOptions();
-var upOptions = {
-    running: false
-};
 
 function FilesSelected(selFiles) {
     if (upOptions.running)
         return;
     upOptions = UploadOptions();
     if (upOptions.auth.use && isNaN(upOptions.auth.userID)) {
-        alert('Wrong user ID\u2014it must be a number.');
+        alert('Wrong user ID - it must be a number.');
         return;
     }
     if (upOptions.auth.use && upOptions.auth.ticket.length != 40) {
-        alert('Wrong ticket\u2014it must be 40 characters long.');
+        alert('Wrong ticket - it must be 40 characters long.');
         return;
     }
     upOptions.running = true;
@@ -67,7 +83,7 @@ function FilesSelected(selFiles) {
         SendFiles(files);
     } catch (e) {
         if (typeof e == 'string')
-            alert('Couldn\'t upload: ' + e);
+            alert('Couldn\'t upload - ' + e);
     }
 }
 
@@ -135,15 +151,9 @@ function Log(className, msg) {
     var now = new Date;
     msg = '[' + now.getHours() + ':' + now.getMinutes() + '] ' + msg;
     $show('log');
-    /* if ($('log').childNodes.length > 200) {
-    	var log = $('log');
-    	while (child = log.firstChild) {
-    		log.removeChild(child);
-    	}
-    } */
     var line = document.createElement('div');
     line.className = className;
-    line.innerHTML = EscapeHTML(msg);
+    line.innerHTML = msg;
     $('log').appendChild(line);
 }
 
@@ -196,19 +206,30 @@ function SendFile(file, callback) {
     var xhr = CreateXHRequest();
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && (this.status == 200 || this.status == 304 /*not modified*/ )) {
+            if (~this.responseText.indexOf('generation failed'))
+                LogFailure(file, 'thumbnail generation failed, image might be corrupted even if added');
             // "mage" instead of "image" because first "I" might be capitalized.
-            if (this.responseText.indexOf('mage added') != -1)
+            if (~this.responseText.indexOf('mage added'))
                 LogSuccess(file)
-            else if (this.responseText.indexOf('already exists') != -1)
-                LogFailure(file, 'this image already exists')
-            else if (this.responseText.indexOf('permission') != -1) {
+            else if (~this.responseText.indexOf('already exists.')) {
+                var existId;
+                try {
+                    existId = this.responseText.split('can find it ')[1].split('here')[0].split('&id=')[1].replace('">', '');
+                } catch (any) {};
+                if (!!Number(existId))
+                    LogFailure(file, 'image already exists <a href="index.php?page=post&s=view&id=' + existId + '" target="_blank">here</a>')
+                else
+                    LogFailure(file, 'image probably doesn\'t already exist, but the booru says so')
+            } else if (~this.responseText.indexOf('permission')) {
                 LogFailure(file, 'no permissions');
                 var msg =
-                    'This image could not be uploaded; the board says that you have no permissions.\nCheck if you are logged in. Stopped.';
+                    'Could not upload this image - the board says that we have no permissions.\nCheck if you are logged in. Stopped.';
                 alert(msg);
                 OnAllUploaded();
                 throw msg;
-            } else
+            } else if (~this.responseText.indexOf('n error occured'))
+                LogFailure(file, 'image either already exists or is corrupted')
+            else
                 LogFailure(file, 'wrong response, check your posting form URL');
             UpdateUpProgress((upOptions.stats.success + upOptions.stats.failed) / upOptions.stats.total);
             setTimeout(callback, upOptions.delay);
@@ -314,8 +335,11 @@ function RestoreLastSettings() {
     });
     $each(checkboxesToSave, function(setting) {
         var lastValue = GetCookie(cookieBaseName + setting);
-        if (IsNum(lastValue))
+        if (IsNum(lastValue)) {
             $(setting).checked = lastValue == '1';
+            if ($(setting).onchange)
+                $(setting).onchange();
+        }
     });
 }
 
