@@ -66,11 +66,11 @@ function FilesSelected(selFiles) {
         return;
     upOptions = UploadOptions();
     if (upOptions.auth.use && isNaN(upOptions.auth.userID)) {
-        alert('Wrong user ID - it must be a number.');
+        alert('Wrong user ID\u2014it must be a number.');
         return;
     }
     if (upOptions.auth.use && upOptions.auth.ticket.length != 40) {
-        alert('Wrong ticket - it must be 40 characters long.');
+        alert('Wrong ticket\u2014it must be 40 characters long.');
         return;
     }
     upOptions.running = true;
@@ -219,11 +219,11 @@ function SendFile(file, callback) {
                 if (!!Number(existId))
                     LogFailure(file, 'image already exists <a href="index.php?page=post&s=view&id=' + existId + '" target="_blank">here</a>')
                 else
-                    LogFailure(file, 'image probably doesn\'t already exist, but the booru says so')
+                    LogFailure(file, 'too big? too small? corrupted?')
             } else if (~this.responseText.indexOf('permission')) {
                 LogFailure(file, 'no permissions');
                 var msg =
-                    'Could not upload this image - the board says that we have no permissions.\nCheck if you are logged in. Stopped.';
+                    'Could not upload this image\u2014the board says that you have no permissions.\nCheck if you are logged in. Stopped.';
                 alert(msg);
                 OnAllUploaded();
                 throw msg;
