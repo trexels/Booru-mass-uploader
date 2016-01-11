@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name		Booru Mass Uploader
 // @description	Add ability to bulk upload images to your booru
 // @version	1.1
@@ -19,7 +19,7 @@ if (window.top != window.self)
 
 if (~document.location.href.indexOf('s=mass_upload')) {	
 	var xhr= new XMLHttpRequest();
-	xhr.open('GET', 'http://crossorigin.me/http://seedmanc.github.io/Booru-mass-uploader/index.html', true);
+	xhr.open('GET', 'http://crossorigin.me/http://proximanova.github.io/Booru-mass-uploader/index.html', true);
 	xhr.onreadystatechange= function() {
 		if (this.readyState != 4) return;
 		if (this.status != 200) return; 
