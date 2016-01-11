@@ -206,20 +206,23 @@ function SendFile(file, callback) {
     var xhr = CreateXHRequest();
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && (this.status == 200 || this.status == 304 /*not modified*/ )) {
-            if (~this.responseText.indexOf('generation failed'))
+            if (~this.responseText.indexOf('generation failed')) {
                 LogFailure(file, 'thumbnail generation failed, image might be corrupted even if added');
             // "mage" instead of "image" because first "I" might be capitalized.
-            if (~this.responseText.indexOf('mage added'))
+            } else if (~this.responseText.indexOf('mage added')) {
                 LogSuccess(file)
-            else if (~this.responseText.indexOf('already exists.')) {
+            } else if (~this.responseText.indexOf('already exists.')) {
                 var existId;
                 try {
                     existId = this.responseText.split('can find it ')[1].split('here')[0].split('&id=')[1].replace('">', '');
                 } catch (any) {};
-                if (!!Number(existId))
+                if (!!Number(existId)) {
                     LogFailure(file, 'image already exists <a href="index.php?page=post&s=view&id=' + existId + '" target="_blank">here</a>')
-                else
+                } else if (existId = "") {
+                    LogFailure(file, 'image was deleted')
+                } else {
                     LogFailure(file, 'too big? too small? corrupted?')
+                }
             } else if (~this.responseText.indexOf('permission')) {
                 LogFailure(file, 'no permissions');
                 var msg =
@@ -227,9 +230,9 @@ function SendFile(file, callback) {
                 alert(msg);
                 OnAllUploaded();
                 throw msg;
-            } else if (~this.responseText.indexOf('n error occured'))
-                LogFailure(file, 'image either already exists or is corrupted')
-            else
+            } else if (~this.responseText.indexOf('n error occured')) {
+                LogFailure(file, 'too big? too small? corrupted?')
+            } else {
                 LogFailure(file, 'wrong response, check your posting form URL');
             UpdateUpProgress((upOptions.stats.success + upOptions.stats.failed) / upOptions.stats.total);
             setTimeout(callback, upOptions.delay);
