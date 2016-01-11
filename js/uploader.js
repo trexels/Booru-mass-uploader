@@ -236,8 +236,8 @@ function SendFile(file, callback) {
                 LogFailure(file, 'wrong response, check your posting form URL');
             UpdateUpProgress((upOptions.stats.success + upOptions.stats.failed) / upOptions.stats.total);
             setTimeout(callback, upOptions.delay);
+            }
         }
-    }
     var boundary = '--bOh3aYae';
     var EOLN = "\r\n";
     var postVars = '';
