@@ -8,6 +8,8 @@
 // @include	http://safebooru.org/index.php*
 // @include	http://rule34.xxx/index.php*
 // @include	http://xbooru.com/index.php*
+// @include	http://pbooru.com/index.php*
+// @include	http://safeponi.com/index.php*
 // @grant 		none 
 // @noframes
 // ==/UserScript==
