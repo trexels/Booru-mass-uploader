@@ -21,6 +21,6 @@ Interface was somewhat optimized, removing the redundant `Set tags based on imag
 
 Note that so far I have tested it with only a few boorus hosted on the http://booru.org site. I don't own other boorus to test it more and even though I tried adding support for Gelbooru and Safebooru, I haven't tested it there or on other custom-domain boorus. Your feedback is required, with enough of it I might add more support later.
 
-# To do
+## To do
 
-Add URL decode checkbox from source tags. E.g., for the source "http://example.com/example/123" "source%3Aexample.com%2Fexample%2F123" as a tag in the filename would translate to the tag "source:http://example.com/example/123"
+Add URL decode checkbox from source tags. E.g., for the source "http://example.com/eg/123" "source%3Aexample.com%2Feg%2F123" as a tag in the filename would translate to the tag "source:http://example.com/eg/123".
