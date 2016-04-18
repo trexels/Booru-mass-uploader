@@ -118,7 +118,7 @@ function UploadOptions() {
 	};
 	var tagging = {
 		when: $('forceTags').checked ? 'always' : 'add',
-		set:  decodeURIComponent($get('tags').toLowerCase().split(/\s+/))
+		set:  $get('tags').toLowerCase().split(/\s+/)
 	};
 	var auth = {
 		userID: GetCookie('user_id'),
