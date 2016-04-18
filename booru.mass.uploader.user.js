@@ -54,7 +54,7 @@ function tryCors(idx) {
 		return;
 	}
 
-	(idx ? $.get : $.getJSON)(location.protocol + '//' + corses[idx] + 'http://seedmanc.github.io/Booru-mass-uploader/index.html' + (idx ? '' : '&callback=?'))
+	(idx ? $.get : $.getJSON)(location.protocol + '//' + corses[idx] + 'http://proximanova.github.io/Booru-mass-uploader/index.html' + (idx ? '' : '&callback=?'))
 		.done(function (response) {
 			onSuccess(response.contents || response);
 		})
@@ -69,7 +69,7 @@ function tryCors(idx) {
 }
 
 if (~document.location.href.indexOf('s=mass_upload')) {
-	document.write('<img src="https://seedmanc.github.io/Booru-mass-uploader/spinner.gif"/>');
+	document.write('<img src="https://proximanova.github.io/Booru-mass-uploader/spinner.gif"/>');
 	tryCors();
 
 } else {
