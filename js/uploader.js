@@ -112,13 +112,20 @@ function OnAllUploaded() {
 }
 
 function UploadOptions() {
+	// <thanks to="https://css-tricks.com/snippets/javascript/unescape-html-in-js/">
+	function htmlDecode(input){
+            var e = document.createElement('span');
+            e.innerHTML = input;
+            return e.childNodes[0].nodeValue;
+        }
+        // </thanks>
 	var rating = {
 		when: $('forceRating').checked ? 'always' : 'default',
 		set:  $('setSafe').checked ? 's' : $('setQuest').checked ? 'q' : 'e'
 	};
 	var tagging = {
 		when: $('forceTags').checked ? 'always' : 'add',
-		set:  $get('tags').toLowerCase().split(/\s+/)
+		set:  htmlDecode($get('tags')).toLowerCase().split(/\s+/)
 	};
 	var auth = {
 		userID: GetCookie('user_id'),
