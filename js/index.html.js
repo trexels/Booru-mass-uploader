@@ -122,11 +122,11 @@ document.documentElement.innerHTML='\
 			padding-top: 0.5em;\
 		}\
 	</style>\
-	<script type="text/javascript" src="https://seedmanc.github.io/Booru-mass-uploader/js/common-min.js?v=1.4.3"></script>\
+	<script type="text/javascript" src="https://proximanova.github.io/Booru-mass-uploader/js/common-min.js?v=1.4.3"></script>\
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>\
-	<script type="text/javascript" src="https://seedmanc.github.io/Booru-mass-uploader/js/booru-params.js?v=1.4.3"></script>\
-	<script type="text/javascript" src="https://seedmanc.github.io/Booru-mass-uploader/js/helpers.min.js?v=1.4.3"></script>\
-	<script type="text/javascript" src="https://seedmanc.github.io/Booru-mass-uploader/js/uploader.js?v=1.4.3"></script>\
+	<script type="text/javascript" src="https://proximanova.github.io/Booru-mass-uploader/js/booru-params.js?v=1.4.3"></script>\
+	<script type="text/javascript" src="https://proximanova.github.io/Booru-mass-uploader/js/helpers.min.js?v=1.4.3"></script>\
+	<script type="text/javascript" src="https://proximanova.github.io/Booru-mass-uploader/js/uploader.js?v=1.4.3"></script>\
 </head>\
 <body>\
 <h1>Booru Mass-Uploader<span style="font-size:14px;"> v1.4.3</span></h1>\
