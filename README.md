@@ -3,7 +3,7 @@ This userscript allows you to mass-upload images to imageboard sites running Gel
 
 With the [public Mass Uploader](https://unblock.ibsearch.xxx/mass-upload/) gone, a need arose for replacement. While many tried to mindlessly replicate the PHP-requiring setup of the old one, I took another approach and simply integrated the uploader into the Booru page itself, eliminating the need to bypass CORS.
 
-After installation, [the userscript](https://github.com/Seedmanc/Booru-mass-uploader/raw/gh-pages/booru.mass.uploader.user.js) adds a link to [the mass uploader page](https://github.com/Seedmanc/Booru-mass-uploader/raw/gh-pages/index.html) in the booru's menu:
+After installation, **[the userscript](https://seedmanc.github.io/Booru-mass-uploader/booru.mass.uploader.user.js)** adds a link to the mass uploader page in the booru's menu:
 
 ![screenshot: booru menu](http://puu.sh/mvB9F/ea5668b606.png)
 
@@ -11,7 +11,7 @@ The link leads to a (supposedly) non-existant location on the booru &mdash; `/in
 
 This removes the need to bother with manual cookie retrieval, upload URL management, and, of course, CORS limitation. Additionally it allows to use custom tags from your settings. I also fixed the irrelevant "Firefox version 3.6 to 38" requirement; all I had to do was add the polyfill for that one missing method.
 
-![screenshot: index.html](http://puu.sh/nglS1/ac7e2c6345.png)
+![screenshot: index.html](http://puu.sh/pR8bb/4bf82fff3c.png)
 
 ## Other improvements
 
@@ -24,9 +24,14 @@ This removes the need to bother with manual cookie retrieval, upload URL managem
   * `image already exists`, linking to the existing duplicate on the booru
   * `image was deleted`, when a duplicate of the image was uploaded before, but later removed (Gelbooru only)
   * `image is too big, too small, or corrupted`, when the booru refuses to accept the image for other reasons (Gelbooru only)
-* Users can upload folders (Chrome only)
+* Error management: Upon encountering errors when uploading, the script produces a batch command file that can separate faulty images from the rest of collection and sort them into folders by error type. Should support both Windows and Unix
+* Users can select folders for uploading
 
 If you see a booru that is not yet included in the header, you can put it there yourself following the pattern of the existing `@include` lines.
+
+### Help wanted
+
+In order to add Shimmie support I need docs on its API or at least its compatility mode with Danbooru.
 
 ## See also
 
@@ -34,7 +39,3 @@ Be sure to check out these Booru-related userscripts:
 
 * The [Booru Augmentation Project](https://github.com/Seedmanc/Booru-Augmentation-Project)
 * Usernam's [Booru mass editor](https://github.com/ProximaNova/Booru-mass-editor)
-
-## To do
-
-Add URL decode checkbox from source tags. E.g., for the source "http://example.com/eg/123" "source%3Aexample.com%2Feg%2F123" as a tag in the filename would translate to the tag "source:http://example.com/eg/123".
